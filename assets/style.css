@@ -1,0 +1,11 @@
+html {
+  background-color: #EEEEEE;
+}
+
+fieldset {
+  padding: 5px;
+}
+
+label, input {
+  margin: 5px;
+}
