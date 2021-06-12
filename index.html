@@ -15,7 +15,7 @@
     <main>
       <div class="content">
         <article class="proker1">
-          <h2>Program Kerja #1</h2>
+          <h2>Program Kerja #1 <span class="nilai" id="persen_proker">-</span></h2>
           <input type="text" id="proker1" placeholder="Workshop Keadministrasian"
                  onchange="refreshValue()">
 
@@ -24,66 +24,91 @@
             <div class="unsur">
               <div class="add_element">
                 <p>Deskripsi Program</p>
-                <button type="button" name="tambah" onclick="tambah_deskripsi()">+</button>
-                <button type="button" name="kurang" onclick="kurang_deskripsi()">-</button>
+                <button type="button" name="tambah" onclick="tambah_deskripsi(), refreshValue()">+</button>
+                <button type="button" name="kurang" onclick="kurang_deskripsi(), refreshValue()">-</button>
               </div>
 
               <div id="deskripsi_1">
                 <input type="text" name="target_1" placeholder="Memberikan Penyuluhan"
                        onchange="refreshValue()">
-                <input type="checkbox" name="terlaksana">
+                <input type="checkbox" name="terlaksana"
+                       onchange="refreshValue()">
               </div>
             </div>
           </div>
 
           <div class="unsur tujuansasaran">
             <h3>Kesesuaian Tujuan dan Sasaran: <span class="nilai" id="sesuai_tujuansasaran">-</span></h3>
-            <div class="unsur">
+            <div class="unsur tujuan">
               <div class="add_element">
-                <p>Tujuan</p>
-                <button type="button" name="tambah" onclick="tambah_deskripsi()">+</button>
-                <button type="button" name="kurang">-</button>
+                <p>Tujuan <span class="nilai" id="sesuai_tujuan"></p>
+                <button type="button" name="tambah" onclick="tambah_tujuan(), refreshValue()">+</button>
+                <button type="button" name="kurang" onclick="kurang_tujuan(), refreshValue()">-</button>
               </div>
 
-              <input type="text" name="target_1" value="Memahami regulasi administrasi">
-              <input type="checkbox" name="terlaksana">
+              <div id="tujuan_1">
+                <input type="text" name="target_1" placeholder="Memahami regulasi administrasi"
+                       onchange="refreshValue()">
+                <input type="checkbox" name="terlaksana"
+                       onchange="refreshValue()">
+              </div>
             </div>
 
-            <div class="unsur">
+            <div class="unsur sasaran">
               <div class="add_element">
-                <p>Sasaran</p>
-                <button type="button" name="tambah">+</button>
-                <button type="button" name="kurang">-</button>
+                <p>Sasaran <span class="nilai" id="sesuai_sasaran"></p>
+                <button type="button" name="tambah" onclick="tambah_sasaran(), refreshValue()">+</button>
+                <button type="button" name="kurang" onclick="kurang_sasaran(), refreshValue()">-</button>
               </div>
 
-              <input type="text" name="target_1" value="Pengurus LDK Syahid">
-              <input type="checkbox" name="terlaksana">
+              <div id="sasaran_1">
+                <input type="text" name="target_1" placeholder="Pengurus LDK Syahid"
+                       onchange="refreshValue()">
+                <input type="checkbox" name="terlaksana"
+                       onchange="refreshValue()">
+              </div>
             </div>
           </div>
 
           <div class="unsur waktutempat">
             <h3>Kesesuaian Waktu dan Tempat: <span class="nilai" id="sesuai_waktutempat">-</span></h3>
             <div class="unsur">
-              <p>Waktu</p>
-              <input type="radio" name="waktu" id="sesuai" value="sesuai">
-              <label for="sesuai">Sesuai</label>
+              <p>Waktu <span class="nilai" id="sesuai_waktu">-</span></p>
+              <div class="unsur">
+                <p>Tanggal <span class="nilai" id="sesuai_tanggal">-</span></p>
+                <input type="radio" name="tanggal" id="sesuai" value="25" onchange="refreshValue()">
+                <label for="sesuai">Sesuai</label>
 
-              <input type="radio" name="waktu" id="telat1minggu" value="telat1minggu">
-              <label for="telat1minggu">+- 1 - 7 hari</label>
+                <input type="radio" name="tanggal" id="telat1minggu" value="20" onchange="refreshValue()">
+                <label for="telat1minggu">+- 1 - 7 hari</label>
 
-              <input type="radio" name="waktu" id="telat2minggu" value="telat2minggu">
-              <label for="telat2minggu">+- 8 - 14 hari</label>
+                <input type="radio" name="tanggal" id="telat2minggu" value="15" onchange="refreshValue()">
+                <label for="telat2minggu">+- 8 - 14 hari</label>
 
-              <input type="radio" name="waktu" id="telat3minggu" value="telat3minggu">
-              <label for="telat3minggu">>= 15 hari</label>
+                <input type="radio" name="tanggal" id="telat3minggu" value="5" onchange="refreshValue()">
+                <label for="telat3minggu">>= 15 hari</label>
+
+                <p>Jam <span class="nilai" id="sesuai_jam">-</span></p>
+                <input type="radio" name="jam" id="sesuai" value="25" onchange="refreshValue()">
+                <label for="sesuai">Sesuai</label>
+
+                <input type="radio" name="jam" id="telatseperempat" value="20" onchange="refreshValue()">
+                <label for="telat1minggu">+- 1-15 menit</label>
+
+                <input type="radio" name="jam" id="telatsetengah" value="15" onchange="refreshValue()">
+                <label for="telat2minggu">+- 16-30 menit</label>
+
+                <input type="radio" name="jam" id="telatsejam" value="5" onchange="refreshValue()">
+                <label for="telat3minggu">>= 31 menit</label>
+              </div>
             </div>
 
             <div class="unsur">
-              <p>Tempat</p>
-              <input type="radio" name="tempat" id="sesuai" value="sesuai">
+              <p>Tempat <span class="nilai" id="sesuai_tempat">-</span></p>
+              <input type="radio" name="tempat" id="sesuai" value="50" onchange="refreshValue()">
               <label for="sesuai">Sesuai</label>
 
-              <input type="radio" name="tempat" id="tidaksesuai" value="tidaksesuai">
+              <input type="radio" name="tempat" id="tidaksesuai" value="25" onchange="refreshValue()">
               <label for="tidaksesuai">Tidak Sesuai</label>
             </div>
           </div>
@@ -94,40 +119,44 @@
             <div class="unsur">
               <div class="add_element">
                 <p>Parameter</p>
-                <button type="button" name="tambah">+</button>
-                <button type="button" name="kurang">-</button>
-
+                <button type="button" name="tambah" onclick="tambah_parameter(), refreshValue()">+</button>
+                <button type="button" name="kurang" onclick="kurang_parameter(), refreshValue()">-</button>
               </div>
-              <input type="number" name="terlaksana" id="target_1" placeholder="10 (realisasi)" min="1">
-              dari
-              <input type="number" name="target_1" id="target_1" placeholder="10 (estimasi)" min="1">
-              <input type="text" name="parameter" placeholder="anggota LDK Syahid">
+
+              <div id="parameter_1">
+                <span class="nilai"></span>
+                <input type="number" name="terlaksana" id="realisasi_parameter" placeholder="10 (realisasi)" min="1"
+                       oninput="refreshValue()">
+                dari
+                <input type="number" name="target_1" id="estimasi_parameter" placeholder="10 (estimasi)" min="1"
+                       oninput="refreshValue()">
+                <input type="text" name="parameter" placeholder="anggota LDK Syahid"
+                       onchange="refreshValue()">
+              </div>
+
             </div>
           </div>
 
-          <div class="unsur efisiensidana">
-            <h3>Efisiensi Dana: <span class="nilai" id="efficiency">-</span></h3>
+          <div class="unsur efisiensi_dana">
+            <h3>Efisiensi Dana: <span class="nilai" id="efisiensi_dana">-</span></h3>
 
             <div class="unsur">
               <label for="estimation">Estimasi Dana</label>
-              <input type="text" name="estimation" id="estimation" placeholder="1000000"
-                     oninput="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)"
-                     onchange="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)">
+              <input type="number" name="estimation" id="estimasi_dana" placeholder="1000000" min=0
+                     onchange="refreshValue()">
             </div>
 
             <div class="unsur">
               <label for="realization">Realisasi Dana</label>
-              <input type="text" name="realization" id="realization" placeholder="990000"
-                     oninput="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)"
-                     onchange="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)">
+              <input type="number" name="realization" id="realisasi_dana" placeholder="990000"
+                     onchange="refreshValue()">
             </div>
 
             <div class="unsur">
               <label for="scale">Skala Penurunan</label>
-              <input type="text" name="scale" id="scale" placeholder="4" disabled>
+              <input type="text" name="scale" id="skala_penurunan" placeholder="4" disabled>
             </div>
           </div>
-          <input type="submit" name="submit" value="Hitung!">
         </article>
       </div>
     </main>
