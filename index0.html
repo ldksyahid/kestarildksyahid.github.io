@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/style.css">
+    <title>Hitung Efisiensi Dana</title>
+  </head>
+  <body>
+    <header>
+      <h1>Halo, selamat datang di tempat menghitung efisiensi dana!</h1>
+      <p>Mari kami bantu</p>
+    </header>
+
+    <main>
+      <form class="" action="index.html" method="POST">
+        <fieldset>
+          <label for="proker">Program Kerja</label>
+          <input type="text" name="proker" placeholder="Ngabuburit Kuy">
+          <br>
+
+          <label for="estimation">Estimasi Dana</label>
+          <input type="text" name="estimation" id="estimation" placeholder="1000000"
+                 oninput="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)"
+                 onchange="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)">
+          <br>
+
+          <label for="realization">Realisasi Dana</label>
+          <input type="text" name="realization" id="realization" placeholder="990000"
+                 oninput="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)"
+                 onchange="countEstimation(document.getElementById('estimation').value,document.getElementById('realization').value)">
+          <br>
+
+          <label for="scale">Skala Penurunan</label>
+          <input type="text" name="scale" id="scale" placeholder="4" disabled>
+          <br>
+
+          <label for="result">Efisiensi Dana (%)</label>
+          <input type="text" id="efficiency" value="" readonly>
+        </fieldset>
+
+      </form>
+      <script src="assets/code.js" charset="utf-8"></script>
+    </main>
+
+    <footer>
+    </footer>
+  </body>
+</html>

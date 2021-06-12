@@ -9,3 +9,35 @@ fieldset {
 label, input {
   margin: 5px;
 }
+
+.content {
+  background-color: lightblue;
+  padding: 5px 10px;
+}
+
+.unsur {
+  border: 1px solid blue;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.add_element {
+  display: flex;
+}
+
+.add_element p {
+  margin: 10px;
+}
+
+button {
+  margin: 5px;
+}
+
+span::after {
+  content: "%"
+}
+
+input[type="text"] {
+  width: 500px;
+}
