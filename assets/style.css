@@ -1,5 +1,5 @@
 html {
-  background-color: #EEEEEE;
+  background-color: white;
 }
 
 fieldset {
@@ -10,13 +10,18 @@ label, input {
   margin: 5px;
 }
 
+header, footer {
+  color: #00A79D;
+}
+
 .content {
-  background-color: lightblue;
+  background-color: #00A79D;
+  color: white;
   padding: 5px 10px;
 }
 
 .unsur {
-  border: 1px solid blue;
+  border: 1px solid yellow;
   border-radius: 4px;
   margin: 5px;
   padding: 5px;
