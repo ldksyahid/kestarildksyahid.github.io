@@ -425,6 +425,10 @@ function refreshValue(){
   document.querySelector("span[id='sesuai_tempat']").innerHTML = persen_sesuai_waktutempat[2];
   // 4.
   var persen_sesuai_parameter = hitung_sesuai_parameter();
+  if (isNaN(persen_sesuai_parameter[0]) == true){
+    persen_sesuai_parameter[0] = 0;
+  }
+
   document.querySelector("span[id='sesuai_parameter']").innerHTML = persen_sesuai_parameter[0];
 
   var parameters = document.querySelectorAll('[id^=parameter_] span');
@@ -437,13 +441,14 @@ function refreshValue(){
   document.querySelector("span[id='efisiensi_dana']").innerHTML = persen_estimasi_dana;
 
   // final per proker
-  var persen_proker = (persen_sesuai_rencana +
-                      persen_sesuai_tujuansasaran +
-                      persen_sesuai_waktutempat[0] + persen_sesuai_waktutempat[1] + persen_sesuai_waktutempat[2] +
-                      persen_sesuai_parameter[0] +
-                      persen_estimasi_dana) / 5;
+  var persen_proker = ((20/100)*(persen_sesuai_rencana) +
+                      (25/100)*(persen_sesuai_tujuansasaran) +
+                      (15/100)*(persen_sesuai_waktutempat[0] + persen_sesuai_waktutempat[1] + persen_sesuai_waktutempat[2]) +
+                      (30/100)*(persen_sesuai_parameter[0]) +
+                      (10/100)*(persen_estimasi_dana));
 
-  console.log(persen_proker);
+  roundAccurately(persen_proker, 2);
+
   document.querySelector("span[id='persen_proker']").innerHTML = persen_proker;
   console.log(bahan_hitung);
 }
