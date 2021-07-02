@@ -104,9 +104,9 @@ function hitung_sesuai_parameter(){
     
     if(realisasi >= estimasi){
       hasil.push(100);
+    } else {
+      hasil.push(roundAccurately((realisasi / estimasi)*100, 2));
     }
-
-    hasil.push(roundAccurately((realisasi / estimasi)*100, 2));
   });
 
   rata_hasil = average(hasil);
