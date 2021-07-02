@@ -101,6 +101,10 @@ function hitung_sesuai_parameter(){
   rencana.forEach((item, i) => {
     var realisasi = parseFloat(item["realisasi"]);
     var estimasi = parseFloat(item["estimasi"]);
+    
+    if(realisasi >= estimasi){
+      hasil.push(100);
+    }
 
     hasil.push(roundAccurately((realisasi / estimasi)*100, 2));
   });
