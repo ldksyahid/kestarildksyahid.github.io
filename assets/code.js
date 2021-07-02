@@ -406,11 +406,11 @@ function refreshValue(){
 
   // 2a.
   var persen_sesuai_tujuan = hitung_sesuai_tujuan();
-  document.querySelector("span[id='sesuai_tujuan']").innerHTML = persen_sesuai_tujuan;
+  document.querySelector("span[id='sesuai_tujuan']").innerHTML = persen_sesuai_tujuan/2;
 
   // 2b.
   var persen_sesuai_sasaran = hitung_sesuai_sasaran();
-  document.querySelector("span[id='sesuai_sasaran']").innerHTML = persen_sesuai_sasaran;
+  document.querySelector("span[id='sesuai_sasaran']").innerHTML = persen_sesuai_sasaran/2;
 
   // 2.
   var persen_sesuai_tujuansasaran = (persen_sesuai_tujuan + persen_sesuai_sasaran) / 2;
