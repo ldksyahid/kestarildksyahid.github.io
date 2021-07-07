@@ -16,6 +16,8 @@
     <main>
       <div>
         <article class="proker content">
+          <!-- Update untuk multiproker sehingga dapat menghitung 1 divisi sekaligus akan ditambahkan di versi selanjutnya -->
+          <!-- Versi yang sudah terintegrasi dengan hosting -->
           <!-- <div class="add_element">
             <button type="button" name="tambah_proker" onclick="tambah_proker(1), refreshValue()">+</button>
             <button type="button" name="kurang_proker" onclick="kurang_proker(1), refreshValue()">-</button>
@@ -30,6 +32,12 @@
               <input type="text" id="proker1" placeholder="Workshop Keadministrasian"
                      oninput="refreshValue()">
 
+              <div class="add_element">
+                <p>Jumlah Pelaksanaan</p>
+                <p id="jumlah_pelaksanaan">1</p>
+                <button type="button" name="tambah_pelaksanaan" onclick="tambah_pelaksanaan(1), refreshValue()">+</button>
+                <button type="button" name="kurang_pelaksanaan" onclick="kurang_pelaksanaan(1), refreshValue()">-</button>
+              </div>
               <div class="resultproker">
                 <table>
                   <thead>
@@ -82,8 +90,10 @@
                   <div id="deskripsi_1">
                     <input type="text" name="target_1" placeholder="Memberikan Penyuluhan"
                            onchange="refreshValue()">
-                    <input type="checkbox" name="terlaksana"
-                           onchange="refreshValue()">
+                    <div class="deskripsi">
+                      <input type="checkbox" name="terlaksana"
+                             onchange="refreshValue()">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -100,8 +110,10 @@
                   <div id="tujuan_1">
                     <input type="text" name="target_1" placeholder="Memahami regulasi administrasi"
                            onchange="refreshValue()">
-                    <input type="checkbox" name="terlaksana"
-                           onchange="refreshValue()">
+                    <div class="tujuan">
+                      <input type="checkbox" name="terlaksana"
+                             onchange="refreshValue()">
+                    </div>
                   </div>
                 </div>
 
@@ -115,8 +127,10 @@
                   <div id="sasaran_1">
                     <input type="text" name="target_1" placeholder="Pengurus LDK Syahid"
                            onchange="refreshValue()">
-                    <input type="checkbox" name="terlaksana"
-                           onchange="refreshValue()">
+                    <div class="sasaran">
+                      <input type="checkbox" name="terlaksana"
+                             onchange="refreshValue()">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -127,30 +141,26 @@
                   <p>Waktu <span class="nilai" id="sesuai_waktu">-</span></p>
                   <div class="unsur tanggal">
                     <p>Tanggal <span class="nilai" id="sesuai_tanggal">-</span></p>
-                    <input type="radio" name="tanggal" id="sesuai" value="25" onchange="refreshValue()">
-                    <label for="sesuai">Sesuai</label>
-
-                    <input type="radio" name="tanggal" id="telat1minggu" value="20" onchange="refreshValue()">
-                    <label for="telat1minggu">+- 1 - 7 hari</label>
-
-                    <input type="radio" name="tanggal" id="telat2minggu" value="15" onchange="refreshValue()">
-                    <label for="telat2minggu">+- 8 - 14 hari</label>
-
-                    <input type="radio" name="tanggal" id="telat3minggu" value="5" onchange="refreshValue()">
-                    <label for="telat3minggu">>= 15 hari</label>
+                    <p>Sesuai | &plusmn 1-7 hari | &plusmn 8-14 hari | ≥ 15 hari</p>
+                    <div class="tanggal">
+                      <div class="choices">
+                        <input type="radio" name="tanggal" id="sesuai" value="25" onchange="refreshValue()">
+                        <input type="radio" name="tanggal" id="telat1minggu" value="20" onchange="refreshValue()">
+                        <input type="radio" name="tanggal" id="telat2minggu" value="15" onchange="refreshValue()">
+                        <input type="radio" name="tanggal" id="telat3minggu" value="5" onchange="refreshValue()">
+                      </div>
+                    </div>
 
                     <p>Jam <span class="nilai" id="sesuai_jam">-</span></p>
-                    <input type="radio" name="jam" id="sesuai" value="25" onchange="refreshValue()">
-                    <label for="sesuai">Sesuai</label>
-
-                    <input type="radio" name="jam" id="telatseperempat" value="20" onchange="refreshValue()">
-                    <label for="telat1minggu">+ 1-15 menit</label>
-
-                    <input type="radio" name="jam" id="telatsetengah" value="15" onchange="refreshValue()">
-                    <label for="telat2minggu">+ 16-30 menit</label>
-
-                    <input type="radio" name="jam" id="telatsejam" value="5" onchange="refreshValue()">
-                    <label for="telat3minggu">>= 31 menit</label>
+                    <p>Sesuai | &plusmn 15 menit | &plusmn 16-30 menit | ≥ 31 menit</p>
+                    <div class="jam">
+                      <div class="choices">
+                        <input type="radio" name="jam" id="sesuai" value="25" onchange="refreshValue()">
+                        <input type="radio" name="jam" id="telatseperempat" value="20" onchange="refreshValue()">
+                        <input type="radio" name="jam" id="telatsetengah" value="15" onchange="refreshValue()">
+                        <input type="radio" name="jam" id="telatsejam" value="5" onchange="refreshValue()">
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -161,18 +171,14 @@
                     <button type="button" name="kurang_tempat" onclick="kurang_tempat(1), refreshValue()">-</button>
                   </div>
 
-                  <!-- <p>Tempat <span class="nilai" id="sesuai_tempat">-</span></p> -->
                   <div id="tempat_1">
                     <input type="text" name="target_1" placeholder="Ruang RK-09"
                            onchange="refreshValue()">
 
-                    <input type="checkbox" name="terlaksana"
-                           onchange="refreshValue()">
-                    <!-- <input type="radio" name="tempat" id="sesuai" value="50" onchange="refreshValue()">
-                    <label for="sesuai">Sesuai</label>
-
-                    <input type="radio" name="tempat" id="tidaksesuai" value="25" onchange="refreshValue()">
-                    <label for="tidaksesuai">Tidak Sesuai</label> -->
+                    <div class="tempat">
+                      <input type="checkbox" name="terlaksana"
+                             onchange="refreshValue()">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -189,13 +195,15 @@
 
                   <div id="parameter_1">
                     <span class="nilai"></span>
-                    <input type="number" name="terlaksana" id="realisasi_parameter" placeholder="10 (realisasi)" min="1"
-                           oninput="refreshValue()">
-                    dari
+                    <br>
                     <input type="number" name="target_1" id="estimasi_parameter" placeholder="10 (estimasi)" min="1"
                            oninput="refreshValue()">
                     <input type="text" name="parameter" placeholder="anggota LDK Syahid"
                            onchange="refreshValue()">
+                    <div class="parameter">
+                      <input type="number" name="terlaksana" id="realisasi_parameter" placeholder="10 (realisasi)" min="1"
+                             oninput="refreshValue()">
+                    </div>
                   </div>
 
                 </div>
@@ -213,9 +221,11 @@
 
                 <div class="unsur">
                   <label for="realization">Realisasi Dana</label>
-                  <input type="number" name="realization" id="realisasi_dana" placeholder="990000"
-                         oninput="refreshValue()"
-                         autocomplete=”off”>
+                  <div class="akurasi">
+                    <input type="number" name="realization" id="realisasi_dana" placeholder="990000"
+                           oninput="refreshValue()"
+                           autocomplete=”off”>
+                  </div>
                 </div>
 
                 <div class="unsur">

@@ -2,7 +2,8 @@ const roundAccurately = (number, decimalPlaces) => Number(Math.round(number + "e
 const average = arr => arr.reduce((acc,v) => acc + v) / arr.length;
 
 var bahan_hitung = {"proker" : [{
-  "namaproker" : "as",
+  "namaproker" : "",
+  "jumlah_pelaksanaan" : 1,
   "aspek_nilai" : {
     "sesuai_rencana" : {
       "deskripsi_program" : [{"deskripsi" : "", "terlaksana" : false}]
@@ -36,6 +37,7 @@ var bahan_hitung = {"proker" : [{
 
 var proker_tunggal = {
   "namaproker" : "",
+  "jumlah_pelaksanaan" : 1,
   "aspek_nilai" : {
     "sesuai_rencana" : {
       "deskripsi_program" : [{"deskripsi" : "", "terlaksana" : false}]
@@ -109,7 +111,7 @@ function hitung_sesuai_sasaran(){
   });
 
   jumlah_terlaksana = count;
-  console.log(count);
+  // console.log(count);
   jumlah_sasaran = sasaran.length;
 
   hasil = jumlah_terlaksana/jumlah_sasaran;
@@ -139,7 +141,7 @@ function hitung_sesuai_waktutempat(){
   tanggal = parseFloat(tanggal);
   jam = parseFloat(jam);
   // tempat = parseFloat(tempat);
-  console.log(tanggal, jam, nilaitempat);
+  // console.log(tanggal, jam, nilaitempat);
   return [tanggal, jam, nilaitempat];
 }
 
@@ -197,10 +199,10 @@ function tambah_proker(){
   var myRegexp = /_(.*)/;
   number = myRegexp.exec(blueprint_element.id)[1];
   number = parseFloat(number) + 1;
-  console.log(number);
+  // console.log(number);
 
   var proker = bahan_hitung["proker"];
-  console.log(typeof proker);
+  // console.log(typeof proker);
   proker.push(proker_tunggal);
 
   // create new duplicated node
@@ -246,6 +248,66 @@ function kurang_proker(){
   to_remove.remove();
 }
 
+function tambah_pelaksanaan(nomorproker) {
+  var parent = document.querySelector("article.proker div[id='proker_"+ nomorproker +"']");
+  var wadah_deskripsi = parent.querySelector("div[class='deskripsi']");
+  var wadah_tujuan = parent.querySelector("div[class='tujuan']");
+  var wadah_sasaran = parent.querySelector("div[class='sasaran']");
+  var wadah_tanggal = parent.querySelector("div[class='tanggal']");
+  var wadah_jam = parent.querySelector("div[class='jam']");
+  var wadah_tempat = parent.querySelector("div[class='tempat']");
+  var wadah_parameter = parent.querySelector("div[class='parameter']");
+  var wadah_akurasi = parent.querySelector("div[class='akurasi']");
+
+  var clone_deskripsi = wadah_deskripsi.querySelector("input[name='terlaksana']").cloneNode(true);
+  var clone_tujuan = wadah_tujuan.querySelector("input[name='terlaksana']").cloneNode(true);
+  var clone_sasaran = wadah_sasaran.querySelector("input[name='terlaksana']").cloneNode(true);
+  var clone_tanggal = wadah_tanggal.querySelector("div[class='choices']").cloneNode(true);
+  var clone_jam = wadah_jam.querySelector("div[class='choices']").cloneNode(true);
+  var clone_tempat= wadah_tempat.querySelector("input[name='terlaksana']").cloneNode(true);
+  var clone_parameter= wadah_parameter.querySelector("input[name='terlaksana']").cloneNode(true);
+  var clone_akurasi= wadah_akurasi.querySelector("input[name='realization']").cloneNode(true);
+
+  wadah_deskripsi.appendChild(clone_deskripsi);
+  wadah_tujuan.appendChild(clone_tujuan);
+  wadah_sasaran.appendChild(clone_sasaran);
+  wadah_tanggal.appendChild(clone_tanggal);
+  wadah_jam.appendChild(clone_jam);
+  wadah_tempat.appendChild(clone_tempat);
+  wadah_parameter.appendChild(clone_parameter);
+  wadah_akurasi.appendChild(clone_akurasi);
+
+  bahan_hitung["proker"][0]["jumlah_pelaksanaan"] += 1;
+}
+
+function kurang_pelaksanaan(nomorproker) {
+  var parent = document.querySelector("article.proker div[id='proker_"+ nomorproker +"']");
+  var wadah_deskripsi = parent.querySelector("div[class='deskripsi']");
+  var wadah_tujuan = parent.querySelector("div[class='tujuan']");
+  var wadah_sasaran = parent.querySelector("div[class='sasaran']");
+  var wadah_tanggal = parent.querySelector("div[class='tanggal']");
+  var wadah_jam = parent.querySelector("div[class='jam']");
+  var wadah_tempat = parent.querySelector("div[class='tempat']");
+  var wadah_parameter = parent.querySelector("div[class='parameter']");
+  var wadah_akurasi = parent.querySelector("div[class='akurasi']");
+
+
+  if (wadah_deskripsi.parentNode && wadah_deskripsi.childElementCount != 1) {
+    wadah_deskripsi.removeChild(wadah_deskripsi.lastElementChild);
+    wadah_tujuan.removeChild(wadah_tujuan.lastElementChild);
+    wadah_sasaran.removeChild(wadah_sasaran.lastElementChild);
+    wadah_tanggal.removeChild(wadah_tanggal.lastElementChild);
+    wadah_jam.removeChild(wadah_jam.lastElementChild);
+    wadah_tempat.removeChild(wadah_tempat.lastElementChild);
+    wadah_parameter.removeChild(wadah_parameter.lastElementChild);
+
+    bahan_hitung["proker"][0]["jumlah_pelaksanaan"] -= 1;
+  } else {
+    console.log("Cannot remove the only one child");
+  }
+
+}
+
 function tambah_deskripsi(nomorproker){
   // get parent node first
   var parent = document.querySelector("article.proker div[id='proker_"+ nomorproker +"']");
@@ -267,9 +329,6 @@ function tambah_deskripsi(nomorproker){
 
   // append new node to parent
   child.appendChild(new_element);
-  // console.log(deskripsi);
-  // console.log(number);
-  // console.log(new_element);
 }
 
 function kurang_deskripsi(nomorproker){
@@ -480,9 +539,14 @@ function kurang_parameter(nomorproker){
   to_remove.remove();
 }
 
-function refreshValue(nomorproker){
-  console.log(bahan_hitung["proker"][0]["namaproker"]);
+function refreshValue(){
+  // console.log(bahan_hitung["proker"][0]["namaproker"]);
   bahan_hitung["proker"][0]["namaproker"] = document.getElementById('proker1').value;
+
+  // 0. Jumlah Pelaksanaan
+  var parent = document.querySelector("article.proker div[id='proker_"+ 1 +"']");
+  var child = parent.querySelector("p[id='jumlah_pelaksanaan']");
+  child.innerHTML = bahan_hitung["proker"][0]["jumlah_pelaksanaan"];
 
   // 1. Kesesuaian Rencana
   var parent = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_rencana"]["deskripsi_program"];
@@ -530,16 +594,6 @@ function refreshValue(nomorproker){
       parent["persen"] = item.value;
     }
   });
-
-  // var parent = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["tempat"];
-  // var radios = document.getElementsByName('tempat');
-  //
-  // radios.forEach((item, i) => {
-  //   if (item.checked){
-  //     parent["opsi"] = item.id;
-  //     parent["persen"] = item.value;
-  //   }
-  // });
 
   var parent = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["tempat"];
   parent.forEach((item, i) => {
@@ -630,5 +684,5 @@ function refreshValue(nomorproker){
   document.querySelector("td[id='efisiensi_dana']").innerHTML = roundAccurately((10/100)*persen_estimasi_dana, 2);
 
   document.querySelector("td[id='persen_proker']").innerHTML = persen_proker;
-  console.log(bahan_hitung);
+  // console.log(bahan_hitung);
 }
