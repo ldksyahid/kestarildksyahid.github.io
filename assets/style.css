@@ -14,17 +14,59 @@ header, footer {
   color: #00A79D;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  /* border: 1px solid yellow; */
+  text-align: left;
+  padding: 8px;
+}
+
+td.konteneval::after {
+  content: "%"
+}
+
+tr:nth-child(even) {
+  background-color: #33A79D;
+}
+
+.collapsible {
+  width: 100%;
+  border: none;
+  text-align: left;
+
+  background-color: inherit;
+  cursor: pointer;
+
+  border-radius: 16px;
+}
+
+.active, .collapsible:hover {
+  background-color: white;
+}
+
+.collapcontent {
+  display: none;
+  overflow: hidden;
+}
+
 .content {
   background-color: #00A79D;
   color: white;
   padding: 5px 10px;
+  border-radius: 16px;
+
+  margin: 16px 8px;
 }
 
 .unsur {
   border: 1px solid yellow;
   border-radius: 4px;
-  margin: 5px;
-  padding: 5px;
+  margin: 4px;
+  padding: 4px;
 }
 
 .add_element {
@@ -35,11 +77,7 @@ header, footer {
   margin: 10px;
 }
 
-button {
-  margin: 5px;
-}
-
-span::after {
+.persentase::after {
   content: "%"
 }
 
