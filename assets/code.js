@@ -69,184 +69,237 @@ var proker_tunggal = {
   "total_persentase" : 0
 }
 
-function hitung_sesuai_rencana(urutan){
+function hitung_sesuai_rencana(){
   var rencana = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_rencana"]["deskripsi_program"];
-  count = 0;
-  rencana.forEach((item, i) => {
-    if(item["terlaksana"]){
-      count += 1;
-    }
+  var pelaksanaan = [];
+  var terlaksana = 0;
+
+  rencana.forEach((rc, i) => {
+    rc["terlaksana"].forEach((tr, i) => {
+      if(tr){
+        terlaksana += 1;
+      }
+    });
+
+    pelaksanaan.push(terlaksana);
+    terlaksana = 0;
   });
 
-  jumlah_terlaksana = count;
-  jumlah_rencana = rencana.length;
+  var jumlah_pelaksanaan = parseInt(bahan_hitung["proker"][0]["jumlah_pelaksanaan"]);
+  var hasil = pelaksanaan.map(x => roundAccurately((x/jumlah_pelaksanaan)*100, 2));
 
-  hasil = jumlah_terlaksana/jumlah_rencana;
-  return roundAccurately(hasil*100, 2);
+  return hasil;
 }
 
-function hitung_sesuai_tujuan(urutan){
-  var tujuan = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_tujuansasaran"]["tujuan"];
-  count = 0;
-  tujuan.forEach((item, i) => {
-    if(item["terlaksana"]){
-      count += 1;
-    }
+function hitung_sesuai_tujuan(){
+  var rencana = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_tujuansasaran"]["tujuan"];
+  var pelaksanaan = [];
+  var terlaksana = 0;
+
+  rencana.forEach((rc, i) => {
+    rc["terlaksana"].forEach((tr, i) => {
+      if(tr){
+        terlaksana += 1;
+      }
+    });
+
+    pelaksanaan.push(terlaksana);
+    terlaksana = 0;
   });
 
-  jumlah_terlaksana = count;
-  jumlah_tujuan = tujuan.length;
+  var jumlah_pelaksanaan = parseInt(bahan_hitung["proker"][0]["jumlah_pelaksanaan"]);
+  var hasil = pelaksanaan.map(x => roundAccurately((x/jumlah_pelaksanaan)*100, 2));
 
-  hasil = jumlah_terlaksana/jumlah_tujuan;
-  return roundAccurately(hasil*100, 2);
+  // console.log(hasil);
+  return hasil;
 }
 
-function hitung_sesuai_sasaran(urutan){
-  var sasaran = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_tujuansasaran"]["sasaran"];
-  count = 0;
-  sasaran.forEach((item, i) => {
-    if(item["terlaksana"]){
-      count += 1;
-    }
+function hitung_sesuai_sasaran(){
+  var rencana = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_tujuansasaran"]["sasaran"];
+  var pelaksanaan = [];
+  var terlaksana = 0;
+
+  rencana.forEach((rc, i) => {
+    rc["terlaksana"].forEach((tr, i) => {
+      if(tr){
+        terlaksana += 1;
+      }
+    });
+
+    pelaksanaan.push(terlaksana);
+    terlaksana = 0;
   });
 
-  jumlah_terlaksana = count;
-  // console.log(count);
-  jumlah_sasaran = sasaran.length;
+  var jumlah_pelaksanaan = parseInt(bahan_hitung["proker"][0]["jumlah_pelaksanaan"]);
+  var hasil = pelaksanaan.map(x => roundAccurately((x/jumlah_pelaksanaan)*100, 2));
 
-  hasil = jumlah_terlaksana/jumlah_sasaran;
-  return roundAccurately(hasil*100, 2);
+  return hasil;
 }
 
-function hitung_sesuai_waktutempat(urutan){
-  var tanggal = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["waktu"]["tanggal"]["persen"];
-  var jam = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["waktu"]["jam"]["persen"];
-  // var tempat = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["tempat"]["persen"];
+function hitung_sesuai_waktutempat(){
+  var tanggal = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["waktu"]["tanggal"];
+  var jam = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["waktu"]["jam"];
   var tempat = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["tempat"];
-  count = 0;
-  tempat.forEach((item, i) => {
-    if(item["sesuai"]){
-      count += 1;
-    }
+
+  var jumlah_pelaksanaan = parseInt(bahan_hitung["proker"][0]["jumlah_pelaksanaan"]);
+  // console.log(tanggal, jam, tempat);
+  var semua_tanggal = [];
+  var semua_jam = [];
+  var semua_tempat = [];
+  var setiap_tempat = 0;
+
+  tanggal.forEach((tgl, i) => {
+    semua_tanggal.push(parseInt(tgl["persen"]));
   });
 
-  jumlah_tempat = tempat.length;
-  jumlah_sesuai = count;
-  jumlah_tidaksesuai = jumlah_tempat - count;
+  jam.forEach((jm, i) => {
+    semua_jam.push(parseInt(jm["persen"]));
+  });
 
-  hasil_sesuai = jumlah_sesuai/jumlah_tempat;
-  hasil_tidaksesuai = jumlah_tidaksesuai/jumlah_tempat;
-  var nilaitempat = roundAccurately(hasil_sesuai*50, 2) + roundAccurately(hasil_tidaksesuai*25, 2);
+  tempat.forEach((tmp, i) => {
+    tmp["sesuai"].forEach((suai, i) => {
+      if(suai){
+        setiap_tempat += 1;
+      } else {
+        setiap_tempat += 0.5;
+      }
+    });
 
-  tanggal = parseFloat(tanggal);
-  jam = parseFloat(jam);
-  // tempat = parseFloat(tempat);
-  // console.log(tanggal, jam, nilaitempat);
-  return [tanggal, jam, nilaitempat];
+    semua_tempat.push(setiap_tempat);
+    setiap_tempat = 0;
+  });
+
+  var hasil_tanggal = semua_tanggal;
+  var hasil_jam = semua_jam;
+  var hasil_tempat = semua_tempat.map(x => roundAccurately((x/jumlah_pelaksanaan)*50, 2))
+
+  return [hasil_tanggal, hasil_jam, hasil_tempat];
 }
 
-function hitung_sesuai_parameter(urutan){
+function hitung_sesuai_parameter(){
   var rencana = bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_parameter"]["parameter"];
-  var hasil = [];
+  var semua_estimasi = [];
+  var semua_realisasi = [];
 
-  rencana.forEach((item, i) => {
-    var realisasi = parseFloat(item["realisasi"]);
-    var estimasi = parseFloat(item["estimasi"]);
+  rencana.forEach((rc, i) => {
+    var estimasi = parseFloat(rc["estimasi"]);
 
-    if(realisasi >= estimasi){
-      hasil.push(100);
-    } else {
-      hasil.push(roundAccurately((realisasi / estimasi)*100, 2));
-    }
-  });
+    semua_estimasi.push(estimasi);
 
-  rata_hasil = average(hasil);
-  return [roundAccurately(rata_hasil, 2), hasil];
-}
+    var tiap_realisasi = [];
+    var realisasi = 0;
 
-function hitung_estimasi_dana(urutan, esti, real, scale){
-  esti = esti;
-  real = real;
-  scale = scale;
+    rc["realisasi"].forEach((re, j) => {
+      realisasi = parseFloat(re);
 
-  percent = real / esti;
-
-  result = 0;
-  if (real < esti){
-    result = percent;
-
-  } else if (real > esti) {
-      diff = percent - 1;
-      result = 1 - diff*scale;
-
-      if (result < 0 || result == 0) {
-        result = 0;
+      if(realisasi > semua_estimasi[i]){
+        tiap_realisasi.push(semua_estimasi[i]);
+      } else {
+        tiap_realisasi.push(realisasi);
       }
 
-  } else {
-    result = 1;
-  }
+      realisasi = 0;
+    });
+    semua_realisasi.push(roundAccurately(average(tiap_realisasi), 2));
+  });
 
-  return roundAccurately(result*100, 2);
+  var persen_parameter = semua_realisasi.map((x, i) => {
+    return (x/semua_estimasi[i])*100;
+  });
+
+  return persen_parameter;
 }
 
-function tambah_proker(){
-  // get parent node first
-  var parent = document.querySelector("article.proker");
-  var blueprint_element = parent.lastElementChild;
+function hitung_estimasi_dana(esti, real, scale){
+  console.log("esti", esti);
+  console.log("real", real);
+  console.log("scal", scale);
 
-  // find the number of latest node and json
-  var myRegexp = /_(.*)/;
-  number = myRegexp.exec(blueprint_element.id)[1];
-  number = parseFloat(number) + 1;
-  // console.log(number);
+  var esti = esti;
+  var real = real;
+  var scale = scale;
 
-  var proker = bahan_hitung["proker"];
-  // console.log(typeof proker);
-  proker.push(proker_tunggal);
+  var seluruh_percent = [];
+  var seluruh_result = [];
 
-  // create new duplicated node
-  var new_element = document.createElement("div")
-  new_element.setAttribute("id", "proker_" + (number));
-  new_element.innerHTML = blueprint_element.innerHTML;
+  real.forEach((rl, i) => {
+    seluruh_percent[i] = rl / esti;
 
-  new_element.querySelector("span[id='nomorproker']").innerHTML = number;
-  new_element.querySelector("button[name='tambah_deskripsi']").setAttribute("onclick", "tambah_deskripsi("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='tambah_tujuan']").setAttribute("onclick", "tambah_tujuan("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='tambah_sasaran']").setAttribute("onclick", "tambah_sasaran("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='tambah_tempat']").setAttribute("onclick", "tambah_tempat("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='tambah_parameter']").setAttribute("onclick", "tambah_parameter("+ (number) +"), refreshValue()");
+    seluruh_result[i] = 0;
+    if (rl < esti) {
+      seluruh_result[i] = seluruh_percent[i];
+    } else if (rl > esti) {
+      diff = seluruh_percent[i] - 1;
+      seluruh_result[i] = 1 - diff*scale;
 
-  new_element.querySelector("button[name='kurang_deskripsi']").setAttribute("onclick", "kurang_deskripsi("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='kurang_tujuan']").setAttribute("onclick", "kurang_tujuan("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='kurang_sasaran']").setAttribute("onclick", "kurang_sasaran("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='kurang_tempat']").setAttribute("onclick", "kurang_tempat("+ (number) +"), refreshValue()");
-  new_element.querySelector("button[name='kurang_parameter']").setAttribute("onclick", "kurang_parameter("+ (number) +"), refreshValue()");
+      if (seluruh_result[i] < 0 || seluruh_result[i] == 0) {
+        seluruh_result[i] = 0;
+      }
+    } else {
+      seluruh_result[i] = 1;
+    }
+  });
 
-  // append new node to parent
-  parent.appendChild(new_element);
+  return seluruh_result.map(x => roundAccurately(x*100, 2));
 }
 
-function kurang_proker(){
-  // get parent node first
-  var parent = document.querySelector("article.proker");
-  var to_remove = parent.lastElementChild;
-
-  // find the latest number of node
-  var myRegexp = /_(.*)/;
-  number = myRegexp.exec(to_remove.id)[1];
-
-  // to prevent of losing last node
-  if (number == 1){
-    return console.log("Cannot remove this node, this is the last node!");
-  }
-
-  // remove node and json element
-  var proker = bahan_hitung["proker"]
-  proker.pop();
-
-  to_remove.remove();
-}
+// function tambah_proker(){
+//   // get parent node first
+//   var parent = document.querySelector("article.proker");
+//   var blueprint_element = parent.lastElementChild;
+//
+//   // find the number of latest node and json
+//   var myRegexp = /_(.*)/;
+//   number = myRegexp.exec(blueprint_element.id)[1];
+//   number = parseFloat(number) + 1;
+//   // console.log(number);
+//
+//   var proker = bahan_hitung["proker"];
+//   // console.log(typeof proker);
+//   proker.push(proker_tunggal);
+//
+//   // create new duplicated node
+//   var new_element = document.createElement("div")
+//   new_element.setAttribute("id", "proker_" + (number));
+//   new_element.innerHTML = blueprint_element.innerHTML;
+//
+//   new_element.querySelector("span[id='nomorproker']").innerHTML = number;
+//   new_element.querySelector("button[name='tambah_deskripsi']").setAttribute("onclick", "tambah_deskripsi("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='tambah_tujuan']").setAttribute("onclick", "tambah_tujuan("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='tambah_sasaran']").setAttribute("onclick", "tambah_sasaran("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='tambah_tempat']").setAttribute("onclick", "tambah_tempat("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='tambah_parameter']").setAttribute("onclick", "tambah_parameter("+ (number) +"), refreshValue()");
+//
+//   new_element.querySelector("button[name='kurang_deskripsi']").setAttribute("onclick", "kurang_deskripsi("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='kurang_tujuan']").setAttribute("onclick", "kurang_tujuan("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='kurang_sasaran']").setAttribute("onclick", "kurang_sasaran("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='kurang_tempat']").setAttribute("onclick", "kurang_tempat("+ (number) +"), refreshValue()");
+//   new_element.querySelector("button[name='kurang_parameter']").setAttribute("onclick", "kurang_parameter("+ (number) +"), refreshValue()");
+//
+//   // append new node to parent
+//   parent.appendChild(new_element);
+// }
+//
+// function kurang_proker(){
+//   // get parent node first
+//   var parent = document.querySelector("article.proker");
+//   var to_remove = parent.lastElementChild;
+//
+//   // find the latest number of node
+//   var myRegexp = /_(.*)/;
+//   number = myRegexp.exec(to_remove.id)[1];
+//
+//   // to prevent of losing last node
+//   if (number == 1){
+//     return console.log("Cannot remove this node, this is the last node!");
+//   }
+//
+//   // remove node and json element
+//   var proker = bahan_hitung["proker"]
+//   proker.pop();
+//
+//   to_remove.remove();
+// }
 
 function tambah_pelaksanaan(nomorproker) {
   var parent = document.querySelector("article.proker div[id='proker_"+ nomorproker +"']");
@@ -303,7 +356,7 @@ function tambah_pelaksanaan(nomorproker) {
   bahan_hitung["proker"][0]["aspek_nilai"]["sesuai_waktutempat"]["waktu"]["jam"].push({"opsi": 0, "persen": 0});
   bahan_hitung["proker"][0]["aspek_nilai"]["efisiensi_dana"]["realisasi_dana"].push(0);
 
-  direncanakan += 1;
+  bahan_hitung["proker"][0]["jumlah_pelaksanaan"] += 1;
 }
 
 function kurang_pelaksanaan(nomorproker) {
@@ -713,8 +766,6 @@ function refreshValue(){
     item_realisasi_dana[j] = list.value;
   });
 
-  console.log(item_realisasi_dana);
-  // console.log(item_realisasi);
   var item_estimasi = document.querySelector("div.efisiensi_dana input[id='estimasi_dana']").value;
   var item_skalaturun = document.querySelector("div.efisiensi_dana input[id='skala_penurunan']").placeholder;
 
@@ -726,53 +777,58 @@ function refreshValue(){
 
   // Rekap semua total_persentase
   // 1.
-  var persen_sesuai_rencana = hitung_sesuai_rencana(0);
-  document.querySelector("span[id='sesuai_rencana']").innerHTML = persen_sesuai_rencana;
+  var persen_sesuai_rencana = hitung_sesuai_rencana();
+  var rata_sesuai_rencana = roundAccurately(average(persen_sesuai_rencana), 2)
+  document.querySelector("span[id='sesuai_rencana']").innerHTML = rata_sesuai_rencana;
 
   // 2a.
-  var persen_sesuai_tujuan = hitung_sesuai_tujuan(0);
-  document.querySelector("span[id='sesuai_tujuan']").innerHTML = persen_sesuai_tujuan/2;
+  var persen_sesuai_tujuan = hitung_sesuai_tujuan();
+  var rata_sesuai_tujuan = roundAccurately(average(persen_sesuai_tujuan), 2);
+  document.querySelector("span[id='sesuai_tujuan']").innerHTML = rata_sesuai_tujuan/2;
 
   // 2b.
-  var persen_sesuai_sasaran = hitung_sesuai_sasaran(0);
-  document.querySelector("span[id='sesuai_sasaran']").innerHTML = persen_sesuai_sasaran/2;
+  var persen_sesuai_sasaran = hitung_sesuai_sasaran();
+  var rata_sesuai_sasaran = roundAccurately(average(persen_sesuai_sasaran), 2);
+  document.querySelector("span[id='sesuai_sasaran']").innerHTML = rata_sesuai_sasaran/2;
 
   // 2.
-  var persen_sesuai_tujuansasaran = (persen_sesuai_tujuan + persen_sesuai_sasaran) / 2;
-  document.querySelector("span[id='sesuai_tujuansasaran']").innerHTML = roundAccurately(persen_sesuai_tujuansasaran, 2);
+  var rata_sesuai_tujuansasaran = (rata_sesuai_tujuan + rata_sesuai_sasaran) / 2;
+  document.querySelector("span[id='sesuai_tujuansasaran']").innerHTML = roundAccurately(rata_sesuai_tujuansasaran, 2);
 
   // 3.
-  var persen_sesuai_waktutempat = hitung_sesuai_waktutempat(0);
-  document.querySelector("span[id='sesuai_waktutempat']").innerHTML = persen_sesuai_waktutempat[0] + persen_sesuai_waktutempat[1] + persen_sesuai_waktutempat[2];
-  document.querySelector("span[id='sesuai_waktu']").innerHTML = persen_sesuai_waktutempat[0] + persen_sesuai_waktutempat[1];
-  document.querySelector("span[id='sesuai_tanggal']").innerHTML = persen_sesuai_waktutempat[0];
-  document.querySelector("span[id='sesuai_jam']").innerHTML = persen_sesuai_waktutempat[1];
-  document.querySelector("span[id='sesuai_tempat']").innerHTML = persen_sesuai_waktutempat[2];
+  var persen_sesuai_waktutempat = hitung_sesuai_waktutempat();
+  var rata_sesuai_waktutempat = persen_sesuai_waktutempat.map(x => roundAccurately(average(x), 2));
+  // console.log(rata_sesuai_waktutempat);
+
+  document.querySelector("span[id='sesuai_waktutempat']").innerHTML = rata_sesuai_waktutempat[0] + rata_sesuai_waktutempat[1] + rata_sesuai_waktutempat[2];
+  document.querySelector("span[id='sesuai_waktu']").innerHTML = rata_sesuai_waktutempat[0] + rata_sesuai_waktutempat[1];
+  document.querySelector("span[id='sesuai_tanggal']").innerHTML = rata_sesuai_waktutempat[0];
+  document.querySelector("span[id='sesuai_jam']").innerHTML = rata_sesuai_waktutempat[1];
+  document.querySelector("span[id='sesuai_tempat']").innerHTML = rata_sesuai_waktutempat[2];
 
   // 4.
-  var persen_sesuai_parameter = hitung_sesuai_parameter(0);
-  if (isNaN(persen_sesuai_parameter[0]) == true){
-    persen_sesuai_parameter[0] = 0;
-  }
-  document.querySelector("span[id='sesuai_parameter']").innerHTML = persen_sesuai_parameter[0];
+  var persen_sesuai_parameter = hitung_sesuai_parameter();
+  var rata_sesuai_parameter = roundAccurately(average(persen_sesuai_parameter), 2);
+  document.querySelector("span[id='sesuai_parameter']").innerHTML = rata_sesuai_parameter;
 
   var parameters = document.querySelectorAll('[id^=parameter_] span');
   parameters.forEach((item, i) => {
-    item.innerHTML = persen_sesuai_parameter[1][i];
+    item.innerHTML = persen_sesuai_parameter[i-1];
   });
 
   // 5.
-  var persen_estimasi_dana = hitung_estimasi_dana(0, esti, real, scale);
-  document.querySelector("span[id='efisiensi_dana']").innerHTML = persen_estimasi_dana;
+  var persen_estimasi_dana = hitung_estimasi_dana(esti, real, scale);
+  var rata_sesuai_dana = roundAccurately(average(persen_estimasi_dana), 2);
+  document.querySelector("span[id='efisiensi_dana']").innerHTML = rata_sesuai_dana;
 
   // final per proker
-  var persen_proker = ((20/100)*(persen_sesuai_rencana) +
-                      (25/100)*(persen_sesuai_tujuansasaran) +
-                      (15/100)*(persen_sesuai_waktutempat[0] + persen_sesuai_waktutempat[1] + persen_sesuai_waktutempat[2]) +
-                      (30/100)*(persen_sesuai_parameter[0]) +
-                      (10/100)*(persen_estimasi_dana));
+  var persen_proker = ((20/100)*(rata_sesuai_rencana) +
+                      (25/100)*(rata_sesuai_tujuansasaran) +
+                      (15/100)*(rata_sesuai_waktutempat[0] + rata_sesuai_waktutempat[1] + rata_sesuai_waktutempat[2]) +
+                      (30/100)*(rata_sesuai_parameter) +
+                      (10/100)*(rata_sesuai_dana));
 
-  roundAccurately(persen_proker, 1);
+  roundAccurately(persen_proker, 2);
 
   // nama dan nomor program kerja
   // document.querySelector("span[id='nomorproker']").innerHTML = 1;
@@ -780,11 +836,11 @@ function refreshValue(){
   document.querySelector("span[id='persen_proker']").innerHTML = persen_proker;
 
   // tabel kesimpulan evaluasi
-  document.querySelector("td[id='sesuai_rencana']").innerHTML = roundAccurately((20/100)*persen_sesuai_rencana, 2);
-  document.querySelector("td[id='sesuai_tujuansasaran']").innerHTML = roundAccurately((25/100)*persen_sesuai_tujuansasaran, 2);
-  document.querySelector("td[id='sesuai_waktutempat']").innerHTML = roundAccurately((15/100)*(persen_sesuai_waktutempat[0] + persen_sesuai_waktutempat[1] + persen_sesuai_waktutempat[2]), 2);
-  document.querySelector("td[id='sesuai_parameter']").innerHTML = roundAccurately((30/100)*persen_sesuai_parameter[0], 2);
-  document.querySelector("td[id='efisiensi_dana']").innerHTML = roundAccurately((10/100)*persen_estimasi_dana, 2);
+  document.querySelector("td[id='sesuai_rencana']").innerHTML = roundAccurately((20/100)*rata_sesuai_rencana, 2);
+  document.querySelector("td[id='sesuai_tujuansasaran']").innerHTML = roundAccurately((25/100)*rata_sesuai_tujuansasaran, 2);
+  document.querySelector("td[id='sesuai_waktutempat']").innerHTML = roundAccurately((15/100)*(rata_sesuai_waktutempat[0] + rata_sesuai_waktutempat[1] + rata_sesuai_waktutempat[2]), 2);
+  document.querySelector("td[id='sesuai_parameter']").innerHTML = roundAccurately((30/100)*rata_sesuai_parameter, 2);
+  document.querySelector("td[id='efisiensi_dana']").innerHTML = roundAccurately((10/100)*rata_sesuai_dana, 2);
 
   document.querySelector("td[id='persen_proker']").innerHTML = persen_proker;
 }
