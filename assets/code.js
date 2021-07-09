@@ -211,9 +211,9 @@ function hitung_sesuai_parameter(){
 }
 
 function hitung_estimasi_dana(esti, real, scale){
-  console.log("esti", esti);
-  console.log("real", real);
-  console.log("scal", scale);
+  // console.log("esti", esti);
+  // console.log("real", real);
+  // console.log("scal", scale);
 
   var esti = esti;
   var real = real;
@@ -240,7 +240,7 @@ function hitung_estimasi_dana(esti, real, scale){
       seluruh_result[i] = 1;
     }
   });
-  console.log(seluruh_result);
+  // console.log(seluruh_result);
   return seluruh_result.map(x => roundAccurately(x*100, 2));
 }
 
@@ -835,6 +835,11 @@ function refreshValue(){
   // document.querySelector("span[id='nomorproker']").innerHTML = 1;
   document.querySelector("span[id='namaproker']").innerHTML = document.querySelector("input[id='proker1']").value;
   document.querySelector("span[id='persen_proker']").innerHTML = persen_proker;
+
+  // if( persen_proker < (71/100)){
+  //   document.querySelector("span[id='persen_proker']").style.backgroundColor = "#FF0000";
+  // }
+  // console.log();
 
   // tabel kesimpulan evaluasi
   document.querySelector("td[id='sesuai_rencana']").innerHTML = roundAccurately((20/100)*rata_sesuai_rencana, 2);
