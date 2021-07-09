@@ -763,11 +763,11 @@ function refreshValue(){
   var list_realisasi_dana = document.querySelectorAll("div.efisiensi_dana input[id='realisasi_dana']");
   var item_realisasi_dana = [];
   list_realisasi_dana.forEach((list, j) => {
-    item_realisasi_dana[j] = list.value;
+    item_realisasi_dana[j] = parseFloat(list.value);
   });
 
-  var item_estimasi = document.querySelector("div.efisiensi_dana input[id='estimasi_dana']").value;
-  var item_skalaturun = document.querySelector("div.efisiensi_dana input[id='skala_penurunan']").placeholder;
+  var item_estimasi = parseFloat(document.querySelector("div.efisiensi_dana input[id='estimasi_dana']").value);
+  var item_skalaturun = parseFloat(document.querySelector("div.efisiensi_dana input[id='skala_penurunan']").placeholder);
 
   var esti = item_estimasi;
   var real = item_realisasi_dana;
