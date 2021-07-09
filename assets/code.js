@@ -829,12 +829,10 @@ function refreshValue(){
                       (30/100)*(rata_sesuai_parameter) +
                       (10/100)*(rata_sesuai_dana));
 
-  roundAccurately(persen_proker, 2);
-
   // nama dan nomor program kerja
   // document.querySelector("span[id='nomorproker']").innerHTML = 1;
   document.querySelector("span[id='namaproker']").innerHTML = document.querySelector("input[id='proker1']").value;
-  document.querySelector("span[id='persen_proker']").innerHTML = persen_proker;
+  document.querySelector("span[id='persen_proker']").innerHTML = roundAccurately(persen_proker, 2);;
 
   // if( persen_proker < (71/100)){
   //   document.querySelector("span[id='persen_proker']").style.backgroundColor = "#FF0000";
@@ -848,5 +846,5 @@ function refreshValue(){
   document.querySelector("td[id='sesuai_parameter']").innerHTML = roundAccurately((30/100)*rata_sesuai_parameter, 2);
   document.querySelector("td[id='efisiensi_dana']").innerHTML = roundAccurately((10/100)*rata_sesuai_dana, 2);
 
-  document.querySelector("td[id='persen_proker']").innerHTML = persen_proker;
+  document.querySelector("td[id='persen_proker']").innerHTML = roundAccurately(persen_proker, 2);;
 }
