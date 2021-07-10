@@ -226,6 +226,10 @@ function hitung_estimasi_dana(esti, real, scale){
     seluruh_percent[i] = rl / esti;
 
     seluruh_result[i] = 0;
+
+    if (esti == 0) {
+      seluruh_result[i] = 0;
+    } else
     if (rl < esti) {
 
       seluruh_result[i] = seluruh_percent[i];
